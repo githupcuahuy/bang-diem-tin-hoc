@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d32">
+  <title>Bảng điểm thi đua lớp</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">★</div>
+    <div><p class="eyebrow">CÔNG CỤ LỚP HỌC</p><h1>Bảng điểm thi đua</h1><p class="subtitle">Cùng cố gắng · Cùng tiến bộ</p></div>
+    <span id="connection" class="status">Đang khởi tạo…</span>
+  </header>
+
+  <main class="container">
+    <section class="intro-row">
+      <div><p class="eyebrow">TỔNG QUAN</p><h2>Bảng xếp hạng</h2><p class="muted">Điểm được đồng bộ trực tuyến khi đã cấu hình Firebase.</p></div>
+      <button id="shareBtn" class="button secondary">↗ Chia sẻ / Mã QR</button>
+    </section>
+
+    <section id="scoreboard" class="score-grid" aria-live="polite"></section>
+
+    <section class="panel">
+      <div class="panel-heading"><div><p class="eyebrow">GHI NHẬN THÀNH TÍCH</p><h2>Cộng hoặc trừ điểm</h2></div><span class="pill">4 tổ</span></div>
+      <form id="scoreForm">
+        <label for="team">Chọn tổ</label>
+        <select id="team" required>
+          <option value="1">Tổ 1</option><option value="2">Tổ 2</option>
+          <option value="3">Tổ 3</option><option value="4">Tổ 4</option>
+        </select>
+        <div class="form-two">
+          <div><label for="points">Số điểm</label><input id="points" type="number" min="1" max="100" value="1" required></div>
+          <div><label>Loại điểm</label><div class="segmented"><label><input type="radio" name="kind" value="add" checked><span>＋ Cộng</span></label><label><input type="radio" name="kind" value="subtract"><span>− Trừ</span></label></div></div>
+        </div>
+        <label for="reason">Lý do</label>
+        <input id="reason" type="text" maxlength="160" placeholder="Ví dụ: phát biểu xây dựng bài…" required>
+        <button id="submitBtn" class="button primary" type="submit">Ghi nhận điểm</button>
+        <p class="fine-print">Lưu ý: ai có đường link đều có thể chấm điểm và thay đổi bảng điểm. Chỉ chia sẻ trong lớp.</p>
+      </form>
+      <p id="formMessage" class="message" role="status"></p>
+    </section>
+
+    <section class="panel history-panel">
+      <div class="panel-heading"><div><p class="eyebrow">NHẬT KÝ</p><h2>Lịch sử chấm điểm</h2></div><button id="refreshBtn" class="button secondary small">Làm mới</button></div>
+      <div id="history" class="history-list"><p class="muted">Đang tải lịch sử…</p></div>
+    </section>
+
+    <section id="qrPanel" class="panel qr-panel hidden">
+      <div class="panel-heading"><div><p class="eyebrow">CHIA SẺ TRANG WEB</p><h2>Mã QR của lớp</h2></div><button id="closeQr" class="icon-button" aria-label="Đóng">×</button></div>
+      <p class="muted">Sau khi đưa website lên mạng, mã QR sẽ dẫn tới địa chỉ hiện tại. Quét bằng camera điện thoại để mở trang.</p>
+      <div id="qrcode" class="qr-code"></div>
+      <p id="pageUrl" class="url-text"></p>
+      <button id="downloadQr" class="button secondary">Tải mã QR (PNG)</button>
+    </section>
+
+    <footer><span>Thiết kế cho lớp học</span><span>Điểm minh bạch · Lịch sử rõ ràng</span></footer>
+  </main>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
